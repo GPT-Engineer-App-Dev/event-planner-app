@@ -1,18 +1,26 @@
-import { Box, Container, Heading, VStack, Text, HStack, Spacer, Flex } from "@chakra-ui/react";
-
-const events = [
-  { id: 1, title: "Event One", date: "2023-10-01", description: "Description for event one." },
-  { id: 2, title: "Event Two", date: "2023-10-05", description: "Description for event two." },
-  { id: 3, title: "Event Three", date: "2023-10-10", description: "Description for event three." },
-];
+import { Box, Container, Heading, VStack, Text, HStack, Spacer, Flex, Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Index = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const storedEvents = JSON.parse(localStorage.getItem("events")) || [];
+    setEvents(storedEvents);
+  }, []);
+
   return (
     <Container maxW="container.xl" p={4}>
       <VStack spacing={8}>
         {/* Header */}
         <Box as="header" w="100%" bg="blue.500" color="white" p={4} borderRadius="md">
           <Heading as="h1" size="lg" textAlign="center">Events Management App</Heading>
+        </Box>
+
+        {/* Create Event Button */}
+        <Box w="100%" textAlign="right">
+          <Button as={Link} to="/create-event" colorScheme="blue">Create New Event</Button>
         </Box>
 
         {/* Events List */}
