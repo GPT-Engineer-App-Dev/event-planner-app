@@ -11,6 +11,10 @@ const Index = () => {
     navigate(`/edit-event/${event.id}`);
   };
 
+  const handleView = (event) => {
+    navigate(`/view-event/${event.id}`);
+  };
+
   const handleDelete = (eventId) => {
     const updatedEvents = events.filter(event => event.id !== eventId);
     setEvents(updatedEvents);
@@ -55,6 +59,7 @@ const Index = () => {
                     <Text>{event.description}</Text>
                   </VStack>
                   <Spacer />
+                  <Button colorScheme="blue" onClick={() => handleView(event)}>View</Button>
                   <Button colorScheme="teal" onClick={() => handleEdit(event)}>Edit</Button>
                   <Button colorScheme="red" onClick={() => handleDelete(event.id)}>Delete</Button>
                 </HStack>
