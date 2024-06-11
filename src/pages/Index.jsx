@@ -1,9 +1,15 @@
 import { Box, Container, Heading, VStack, Text, HStack, Spacer, Flex, Button } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Index = () => {
   const [events, setEvents] = useState([]);
+
+  const navigate = useNavigate();
+
+  const handleEdit = (event) => {
+    navigate(`/edit-event/${event.id}`);
+  };
 
   useEffect(() => {
     const storedEvents = JSON.parse(localStorage.getItem("events")) || [];
@@ -36,6 +42,7 @@ const Index = () => {
                     <Text>{event.description}</Text>
                   </VStack>
                   <Spacer />
+                  <Button colorScheme="teal" onClick={() => handleEdit(event)}>Edit</Button>
                 </HStack>
               </Box>
             ))}
