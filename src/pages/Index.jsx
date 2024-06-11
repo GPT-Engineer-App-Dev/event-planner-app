@@ -1,14 +1,27 @@
-import { Box, Container, Heading, VStack, Text, HStack, Spacer, Flex, Button } from "@chakra-ui/react";
+import { Box, Container, Heading, VStack, Text, HStack, Spacer, Flex, Button, useToast } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Index = () => {
   const [events, setEvents] = useState([]);
-
+  const toast = useToast();
   const navigate = useNavigate();
 
   const handleEdit = (event) => {
     navigate(`/edit-event/${event.id}`);
+  };
+
+  const handleDelete = (eventId) => {
+    const updatedEvents = events.filter(event => event.id !== eventId);
+    setEvents(updatedEvents);
+    localStorage.setItem("events", JSON.stringify(updatedEvents));
+    toast({
+      title: "Event deleted.",
+      description: "The event has been deleted successfully.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
   };
 
   useEffect(() => {
@@ -43,6 +56,7 @@ const Index = () => {
                   </VStack>
                   <Spacer />
                   <Button colorScheme="teal" onClick={() => handleEdit(event)}>Edit</Button>
+                  <Button colorScheme="red" onClick={() => handleDelete(event.id)}>Delete</Button>
                 </HStack>
               </Box>
             ))}
